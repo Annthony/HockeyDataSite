@@ -1,0 +1,91 @@
+--
+
+\c usernameassign3db;
+
+\copy Team FROM '/home/s1/student/2016/username/html/assignment3/fall2017data.txt' (DELIMITER('|'));
+
+INSERT INTO Team (TeamID, TeamCity, TeamName) VALUES
+ ('99', 'Colorado', 'Avalanche'),
+ ('88', 'New York', 'Rangers'),
+ ('78', 'Ottawa', 'Senators'),
+ ('66', 'Edmonton', 'Oilers'),
+ ('21', 'lolCity', 'FriedRicers');
+
+INSERT INTO Official (OfficialID, FirstName, LastName, HomeCity) VALUES
+ ('99', 'Hugh', 'Grant', 'Toronto'),
+ ('22', 'Courtney', 'Cox', 'New York'),
+ ('33', 'Rosie', 'Odonnell', 'Ottawa'),
+ ('66', 'David', 'Letterman', 'Edmonton'),
+ ('11', 'Regis', 'Philbin', 'Toronto'),
+ ('12', 'Rosie', 'Cox', 'Ottawa'),
+ ('69', 'The', 'Rock', 'Moon');
+
+INSERT INTO Game (GameID, GameCity, GameDate, HeadOfficialID) VALUES
+ ('21', 'Toronto', '2018-02-18', '11'),
+ ('31', 'Toronto', '2018-12-20', '33'),
+ ('12', 'Ottawa', '2018-12-24', '22'),
+ ('15', 'New York', '2018-12-20', '11'),
+ ('13', 'New York', '2018-01-07', '12'),
+ ('10', 'Ottawa', '2018-12-20', '12'),
+ ('14', 'Toronto', '2018-01-08', '33');
+
+INSERT INTO Plays (GameID, TeamID, Score) VALUES
+ ('21', '12', 3),
+ ('21', '11', 2),
+ ('31', '12', 6),
+ ('31', '66', 2),
+ ('12', '78', 2),
+ ('12', '88', 3),
+ ('15', '88', 1),
+ ('15', '11', 2),
+ ('13', '66', 5),
+ ('13', '12', 2),
+ ('10', '66', 4),
+ ('10', '88', 2),
+ ('14', '12', 3),
+ ('14', '11', 1);
+
+INSERT INTO Officiate (GameID, OfficialID) VALUES
+ ('21', '11'),
+ ('21', '12'),
+ ('31', '33'),
+ ('31', '22'),
+ ('31', '12'),
+ ('12', '22'),
+ ('12', '33'),
+ ('12', '66'),
+ ('15', '22'),
+ ('15', '11'),
+ ('13', '12'),
+ ('13', '33'),
+ ('10', '11'),
+ ('10', '12'),
+ ('10', '33'),
+ ('14', '33'),
+ ('14', '11');
+
+SELECT * FROM Team;
+SELECT * FROM Official;
+SELECT * FROM Game;
+SELECT * FROM Plays;
+SELECT * FROM Officiate;
+
+UPDATE Team SET TeamName = 'Maple Leafs' WHERE TeamName = 'Maple Leaves';
+
+UPDATE Plays
+SET Score = 3
+FROM Team
+WHERE Team.TeamName = 'Maple Leafs' AND Plays.TeamID = Team.TeamID;
+
+UPDATE Game
+SET GameDate = '2018-01-01'
+FROM Official, Officiate
+WHERE FirstName = 'David' AND LastName = 'Letterman'
+AND Official.OfficialID = Officiate.OfficialID
+AND Game.GameID = Officiate.GameID;
+
+SELECT * FROM Team;
+SELECT * FROM Official;
+SELECT * FROM Game;
+SELECT * FROM Plays;
+SELECT * FROM Officiate;

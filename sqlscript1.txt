@@ -1,0 +1,47 @@
+--
+
+SELECT datname FROM pg_database  WHERE pg_get_userbyid(datdba) = current_user;
+
+DROP DATABASE IF EXISTS usernameassign3db;
+
+CREATE DATABASE usernameassign3db;
+
+\c usernameassign3db;
+
+REVOKE CONNECT ON DATABASE usernameassign3db FROM public;
+
+GRANT CONNECT ON DATABASE usernameassign3db to username;
+
+\dt;
+
+CREATE TABLE Team (TeamID CHAR(2) NOT NULL, TeamCity VARCHAR(15), TeamName VARCHAR(20), PRIMARY KEY(TeamID));
+
+CREATE TABLE Official (OfficialID CHAR(2) NOT NULL, FirstName VARCHAR(20), LastName VARCHAR(20), HomeCity VARCHAR(15), PRIMARY KEY(OfficialID));
+
+CREATE TABLE Game (GameID CHAR(2) NOT NULL, GameCity VARCHAR(15), GameDate DATE, HeadOfficialID CHAR(2), PRIMARY KEY(GameID), FOREIGN KEY(HeadOfficialID) REFERENCES Official(OfficialID) ON DELETE CASCADE);
+
+CREATE TABLE Plays (GameID CHAR(2), TeamID CHAR(2), Score INTEGER, FOREIGN KEY(GameID) REFERENCES Game(GameID) ON DELETE CASCADE, FOREIGN KEY(TeamID) REFERENCES Team(TeamID) ON DELETE CASCADE);
+
+CREATE TABLE Officiate (GameID CHAR(2) NOT NULL, OfficialID CHAR(2) NOT NULL, FOREIGN KEY(GameID) REFERENCES Game(GameID) ON DELETE CASCADE, FOREIGN KEY(OfficialID) REFERENCES Official(OfficialID) ON DELETE CASCADE);
+
+\dt;
+\d+ Team;
+\d+ Official;
+\d+ Game;
+\d+ Plays;
+\d+ Officiate;
+
+--Team
+--TeamID | TeamCity | TeamName
+
+--Official
+--OfficialID | FirstName | LastName | HomeCity
+
+--Game
+--GameID | GameCity | GameDate | HeadOfficialID
+
+--Plays
+--GameID | TeamID | Score
+
+--Officiate
+--GameID | OfficialID

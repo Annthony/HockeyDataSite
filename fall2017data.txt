@@ -1,0 +1,5 @@
+18|London|Knights
+19|Chicago|Black Hawks
+08|Philadelphia|Flyers
+12|Toronto|Maple Leaves
+11|Detroit|Red Wings

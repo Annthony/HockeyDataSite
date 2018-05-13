@@ -1,0 +1,3 @@
+psql -a -h dbserver -U username -W username < usernamescript1.txt > usernameoutscript1.txt 2>&1
+
+psql -a -h dbserver -U username -W username < usernamescript2.txt > usernameoutscript2.txt 2>&1
